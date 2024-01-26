@@ -1,5 +1,8 @@
 const { verifySignUp } = require("../middleware");
+const { authJwt } = require("../middleware");
 const controller = require("../controllers/auth.controller");
+const productcontroller = require("../controllers/product.controller");
+
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(
@@ -18,6 +21,8 @@ module.exports = function(app) {
   );
   app.post("/api/auth/signin", controller.signin);
   app.post("/api/auth/signout", controller.signout);
+  app.post("/api/auth/addproduct",[authJwt.verifyToken], productcontroller.addproduct);
+
 };
 
 /*
@@ -34,5 +39,5 @@ POST /api/auth/signin
 POST /api/auth/signout
 
 
-https://medium.com/geekculture/rest-api-login-and-register-node-js-with-jwt-8cb6755f5a6b
+
 */
